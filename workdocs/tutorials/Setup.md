@@ -26,6 +26,8 @@ and adding a `.token` file containing your access token to the private registrie
 
 ### Installation
 
+run `npm run initial-setup`
+
 Run `npm install` (or `npm run do-install` if you have private dependencies and a `.token` file) to install the dependencies:
 
 If this is the first time you are running this command it will also:

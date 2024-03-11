@@ -3,9 +3,9 @@ const {execSync} = require("child_process");
 const path = require("path");
 
 libs.forEach(l => {
-    console.log(`linking .npmtoken to ${l}`)
+    console.log(`linking .token to ${l}`)
     try {
-        execSync(`rimraf .npmtoken && ln -s ../.npmtoken .npmtoken`, {
+        execSync(`rimraf .token && ln -s ../.token .token`, {
             cwd: path.join(process.cwd(), l),
             env: process.env
         })

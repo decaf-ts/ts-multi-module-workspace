@@ -1,3 +1,8 @@
+### Building
+
+Make sure your `.gitmodules` file contains your modules in the required build order so the build script can conclude.
+
+
 ### Releases
 
 This repository automates releases in the following manner:
