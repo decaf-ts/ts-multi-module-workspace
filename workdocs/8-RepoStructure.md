@@ -1,7 +1,7 @@
 ### Repository Structure
 
 ```
-ts-workspace
+ts-multi-module-workspace
 │
 │   .gitignore              <-- Defines files ignored to git
 │   .npmignore              <-- Defines files ignored by npm

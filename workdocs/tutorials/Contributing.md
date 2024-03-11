@@ -17,8 +17,8 @@ to abide by its terms.
 ### Bootstrapping the project
 
 ```
-git clone https://github.com/tiagovenceslau/ts-workspace.git
-cd ts-workspace
+git clone https://github.com/decaf-ts/ts-multi-module-workspace.git
+cd ts-multi-module-workspace
 npm install
 npm run build:prod
 ```
