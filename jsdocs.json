@@ -7,43 +7,37 @@
     "node_modules/better-docs/category"
   ],
   "typescript": {
-    "moduleRoot": "src"
+    "moduleRoot": "."
   },
   "package": "package.json",
   "recurseDepth": 10,
   "source": {
     "include": [
-      "./src"
+      "./ts-workspace/src"
     ],
     "exclude": [
-      "cli.(ts|js)"
+      "node_modules",
+      "*/esm/**.*",
+      "zone-flags.ts",
+      "polyfills.ts",
+      "(spec|test|e2e|prod).(jsx|js|ts|tsx)$"
     ],
     "includePattern": "\\.(jsx|js|ts|tsx)$"
   },
   "tags": {
     "allowUnknownTags": true,
-    "dictionaries": [
-      "jsdoc",
-      "closure"
-    ]
+    "dictionaries": ["jsdoc","closure"]
   },
   "templates": {
-    "default": {
-      "useLongnameInNav": true
-    },
     "better-docs": {
-      "name": "ts-template",
-      "title": "TypeScript workspace template",
+      "name": "ts-multi-module",
+      "title": "ts-multi-module",
       "hideGenerator": true,
       "useLongnameInNav": true,
       "navLinks": [
         {
-          "label": "Test Coverage",
+          "label": "Test Results",
           "href": "workdocs/coverage"
-        },
-        {
-          "label": "Github Repository",
-          "href": "https://github.com/decaf-ts/ts-multi-module-workspace#readme"
         },
         {
           "label": "Github Profile",
@@ -53,17 +47,15 @@
     },
     "cleverLinks": true,
     "monospaceLinks": true,
-    "useLongnameInNav": true,
     "search": true
   },
   "opts": {
     "encoding": "utf-8",
-    "useLongnameInNav": true,
     "template": "./node_modules/better-docs",
     "destination": "./docs/",
     "readme": "./README.md",
     "recurse": true,
     "verbose": true,
-    "tutorials": "workdocs/tutorials"
+    "tutorials": "./workdocs/tutorials"
   }
 }

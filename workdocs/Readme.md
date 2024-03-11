@@ -3,7 +3,6 @@
 #include "./workdocs/3-Badges.md"
 #include "./workdocs/4-Description.md"
 #include "./workdocs/tutorials/Setup.md"
-#include "./workdocs/tutorials/Linting.md"
 #include "./workdocs/tutorials/Testing.md"
 #include "./workdocs/tutorials/Releases.md"
 #include "./workdocs/tutorials/CI.md"

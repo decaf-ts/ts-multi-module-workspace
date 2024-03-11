@@ -24,3 +24,5 @@ There are 3 steps the generating the documentation (automated in CI):
    - copies the `./workdocs/{drawings, uml, assets, resources}` to `./docs`;
 
 The produced `docs` folder contains the resulting documentation;
+
+***When adding a new submodule, do not forget to add it the jsdocs list***

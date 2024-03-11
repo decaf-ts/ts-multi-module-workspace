@@ -67,6 +67,8 @@ and adding a `.token` file containing your access token to the private registrie
 
 ### Installation
 
+run `npm run initial-setup`
+
 Run `npm install` (or `npm run do-install` if you have private dependencies and a `.token` file) to install the dependencies:
 
 If this is the first time you are running this command it will also:
@@ -74,20 +76,17 @@ If this is the first time you are running this command it will also:
  - creates a `.token` file which you can leave empty unless you have private dependencies or publish to private registries
  - delete this 'first run script' file and npm call from the `package.json`;
  - try to commit the updated `package.json` and deleted files (having ssh access helps here);
-## Linting
-
-This repo comes with eslint + prettier preconfigured to the default standards
 ## Testing
 
 Preconfigured Jest based testing:
 
-- unit tests under the `tests/unit` folder;
-  - include a default bundle test (helps with circular dependencies and such);
-- integration tests under the `tests/integration` folder;
-- stores converage results under `workdocs/coverage`;
-- publishes coverage result to docs;
-- ignores `cli.ts` from coverage since that is an executable file;
-- defines the coverage threshold in `jest.config.ts`;
+- Configured to goup all modules in their testing, and test them as a whole.
+- When adding a new submodule, add it to `jest.config.js`
+### Building
+
+Make sure your `.gitmodules` file contains your modules in the required build order so the build script can conclude.
+
+
 ### Releases
 
 This repository automates releases in the following manner:
@@ -130,28 +129,9 @@ When the `-no-ci` flag is passed then you can:
  
 ## Continuous Integration/Deployment
 
-While the implementationfor gitlab and github are not perfectly matched, they are perfectly usable.
+Since CI for multi module projects can be anything. No CI is included.
 
-The template comes with ci/cd for :
-  - gitlab (with caching for performance):
-    - stages: 
-      - dependencies: Installs dependencies (on `package-lock.json` changes, caches node modules);
-      - build: builds the code (on `src/*` changes, caches `lib` and `dist`);
-      - test: tests the code (on `src/*`, `test/*` changes, caches `workdocs/{resources, badges, coverage}`);
-      - deploy: 
-        - deploys to package registry on a tag (public|private);
-        - deploys docker image to docker registry (private);
-        - Deploys the documentation to the repository pages;
-  - github:
-    - jest-test: standard `install -> build -> test` loop;
-    - jest-coverage: extracts coverage from the tests;
-    - codeql-analysis: Code quality analisys;
-    - pages: builds the documentation and deploys to github pages
-    - release-on-tag: issues a release when the tag does not contain `-no-ci` string
-    - publish-on-release: publishes to package registry when the tag does not contain the `-no-ci` string
-    - Requires Variables:
-      - CONSECUTIVE_ACTION_TRIGGER: secret to enable actions to trigger other actions;
-      - NPM_TOKEN: npm/docker registry token
+For the default CI reference ts-workspace
 ## Considerations
  - Setup for a linux based environment (Sorry windows users. use WSL... or just change already);
  - Setup for node 20, but will work at least with 16;
@@ -182,6 +162,8 @@ There are 3 steps the generating the documentation (automated in CI):
    - copies the `./workdocs/{drawings, uml, assets, resources}` to `./docs`;
 
 The produced `docs` folder contains the resulting documentation;
+
+***When adding a new submodule, do not forget to add it the jsdocs list***
 ### Related
 
 [![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=ts-multi-module-workspace)](https://github.com/decaf-ts/ts-multi-module-workspace)
@@ -192,23 +174,33 @@ The produced `docs` folder contains the resulting documentation;
 
 The following npm scripts are available for development:
 
-- `preinstall` - will run only on the first install to trigger the dep update. will self delete;
+- `inital-setup` - will run only on the first install to trigger the dep update. will self delete;
+- `preinstall` - initializes the git modules;
 - `do-install` - sets a `TOKEN` environment variable to the contents of `.token` and runs npm install (useful when you
   have private dependencies);
+- `postinstall` - checkout master on all modules, pulls and install dependencies;
 - `flash-forward` - updates all dependencies. Take care, This may not be desirable is some cases;
 - `reset` - updates all dependencies. Take care, This may not be desirable is some cases;
-- `build` - builds the code (via gulp `gulpfile.js`) in development mode (generates `lib` and `dist` folder);
-- `build:prod` - builds the code (via gulp `gulpfile.js`) in production mode (generates `lib` and `dist` folder);
+- `reset-build` - resets and then builds;
+- `link-token` - creates symlinks in all modules to the `.token`;
+- `set-dev` - checout out master on all modules and symlinks the relative dependencies according to the modules;
 - `test` - runs unit tests;
-- `test:integration` - runs it tests;
+- `test:unit` - runs it tests;
 - `test:all` - runs all tests;
-- `lint` - runs es lint on the code folder;
-- `lint-fix` - tries to auto-fix the code folder;
+- `coverage` - runs all test, calculates coverage and generates badges for readme;
+- `build-all` - builds the code (via gulp `gulpfile.js`) in development mode (generates `lib` and `dist` folder);
+- `build-all:prod` - builds the code (via gulp `gulpfile.js`) in production mode (generates `lib` and `dist` folder);
+- `npm-link` - symlinks relative dependencies;
+- `npm-unlink` - reverses the dependency symlink process;
+- `set-to-latest` - checkout all modules to master;
+- `git-checkout` - checkout all modules to master;
+- `git-pull` - pull all modules;
+- `git-all` - runs git command in all modules;
+- `run-all` - runs command in all modules;
 - `prepare-release` - defines the commands to run prior to a new tag (defaults to linting, building production code,
   running tests and documentation generation);
 - `release` - triggers a new tag being pushed to master (via `./bin/tag_release.sh`);
 - `clean-publish` - cleans the package.json for publishing;
-- `coverage` - runs all test, calculates coverage and generates badges for readme;
 - `drawings` - compiles all DrawIO `*.drawio` files in the `workdocs/drawings` folder to png and moves them to
   the `workdocs/resources` folder;
 - `uml` - compiles all PlantUML `*.puml` files in the `workdocs/uml` folder to png and moves them to
